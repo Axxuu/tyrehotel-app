@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+
+<html ng-app="app">
+    <head>
+        <title>Rengashotelli</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <link href="css/bootstrap.min.css" rel="stylesheet">
+        <link href="css/animations.css" rel="stylesheet">
+        <link href="css/styles.css" rel="stylesheet">
+
+        <script src="js/libs/angular.min.js"></script>
+        <script src="js/libs/angular-route.min.js"></script>
+        <script src="js/libs/angular-animate.min.js"></script>
+        <script src="js/libs/ui-bootstrap.min.js"></script>
+        <script src="js/app.js"></script>
+        <script src="js/controllers.js"></script>
+        <script src="js/services.js"></script>
+
+    </head>
+    <body>
+
+        <div class="navbar navbar-default" role="navigation">
+
+            <div class="container">
+
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="">Rengashotelli</a>
+                </div>
+
+                <button type="button" class="btn btn-xs ownBtn" ng-click="logout()" ng-if="authed">
+                    <span class="glyphicon glyphicon-log-out" aria-hidden="false"></span><span class="btnText">Kirjaudu ulos</span>
+                </button>
+                <button type="button" class="btn btn-xs ownBtn" ng-click="addTyres()" ng-if="authed">
+                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span><span class="btnText">Lisää uusi</span>
+                </button>
+                <button type="button" class="btn btn-xs ownBtn" ng-class="searchInput ? 'btnActive' : '' " ng-click="$root.searchInput = !$root.searchInput" ng-if="authed">
+                    <span class="glyphicon glyphicon-search" aria-hidden="true"></span><span class="btnText">Hae</span>
+                </button>
+
+            </div>
+        </div>
+        <div class="container" ng-view></div>
+    </body>
+</html>

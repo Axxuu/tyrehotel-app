@@ -1,0 +1,206 @@
+<div class="modal-header">
+    <h3 class="modal-title" style="float:left;">{{edit ? 'Tietojen muokkaus' : 'Tiedot'}}</h3>
+    <div style="float:right;">
+        <button class="btn btn-default modalBtn" type="button" ng-click="editData()" ng-if="!edit"><span class="glyphicon glyphicon-pencil"></span></button>
+        <button class="btn btn-default modalBtn" type="button" ng-click="cancel()"><span class="glyphicon glyphicon-remove"></button>
+    </div>
+    <span ng-if="!edit" class="lastEdited">Viimeisin muokkaaja {{tiedot.muokkaaja}}</span>
+</div>
+<div class="modal-body">
+
+    <div ng-if="!edit" class="fadeEditOut">
+
+        <table>
+            <tr ng-if="tiedot.reknro || tiedot.auto">
+                <td class="objKey">Auto</td>
+                <td class="objVal" ng-if="tiedot.reknro && tiedot.auto">{{tiedot.reknro | uppercase}}, {{tiedot.auto}}</td>
+                <td class="objVal" ng-if="tiedot.reknro && !tiedot.auto">{{tiedot.reknro | uppercase}}</td>
+                <td class="objVal" ng-if="tiedot.auto && !tiedot.reknro">{{tiedot.auto}}</td>
+            </tr>
+            <tr>
+                <td class="objKey">Tyyppi</td>
+                <td class="objVal">{{tiedot.tyyppi}}</td>
+            </tr>
+            <tr ng-if="tiedot.pultit && tiedot.pultit != 'Valitse'">
+                <td class="objKey"></td>
+                <td class="objVal">Pultit tai mutterit: {{tiedot.pultit}}</td>
+            </tr>
+            <tr>
+                <td class="objKey">Koko</td>
+                <td class="objVal">{{tiedot.koko === '-/-R-' ? 'Ei määritetty' : tiedot.koko}} <b>x</b> {{tiedot.maara}} kpl</td>
+            </tr>
+            <tr>
+                <td class="objKey">Kunto</td>
+                <td class="objVal">{{tiedot.kunto}}</td>
+            </tr>
+            <tr>
+                <td class="objKey">Sijainti</td>
+                <td class="objVal">{{tiedot.sijainti}}<span ng-if="tiedot.hylly && tiedot.hylly != 'Valitse hylly'"> (Hylly {{tiedot.hylly}})</span></td>
+            </tr>
+            <tr ng-if="tiedot.lisatiedot">
+                <td class="objKey">Lisatietoja</td>
+                <td class="objVal">{{tiedot.lisatiedot}}</td>
+            </tr>
+        </table>
+
+    </div>
+
+    <!--------EDIT-------->
+    <div ng-if="edit" class="fadeEdit">
+      <form name="form.data" novalidate>
+        <div class="form-horizontal">
+
+            <div class="form-group">
+                <label for="" class="col-sm-2 control-label">Reknro</label>
+                <div class="col-sm-10">
+                    <input type="text" name="reknro" class="form-control" ng-model="tiedot.reknro" ng-pattern="/([A-Za-z]{2,3})\-([0-9]{1,3})$/" />
+                    <small ng-if="form.data.reknro.$invalid" style="color:red" class="form-text text-muted">Rekisterinumeron täytyy olla muotoa ABC-123!</small>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="" class="col-sm-2 control-label">Auto</label>
+                <div class="col-sm-10">
+                    <input type="text" name="auto" class="form-control" ng-model="tiedot.auto" />
+                </div>
+            </div>
+
+            <div class="form-group">
+            <label for="" class="col-sm-2 control-label">Koko</label>
+            <div class="col-sm-10">
+                <div class="form-inline">
+                    <select class="form-control" name="leveys" ng-model="obj.leveys" required>
+                        <option disabled style="display: none;"></option>
+                        <option ng-repeat="n in range(155,265,10)">{{n}}</option>
+                    </select>
+                    <span style="padding: 0 5px;">/</span>
+                    <select class="form-control" name="profiili" ng-model="obj.profiili" required>
+                        <option disabled style="display: none;"></option>
+                        <option ng-repeat="n in range(35,85,5)">{{n}}</option>
+                    </select>
+                    <span style="padding: 0 5px;">R</span>
+                    <select class="form-control" name="tuuma" ng-model="obj.tuuma" required>
+                        <option disabled style="display: none;"></option>
+                        <option ng-repeat="n in range(13,20,1)">{{n}}</option>
+                    </select>
+                    <span style="padding: 0 7px;font-weight:bold;">x</span>
+                    <select class="form-control mobileFormFix" name="maara" ng-model="tiedot.maara" required>
+                        <option disabled style="display: none;"></option>
+                        <option>1</option>
+                        <option>2</option>
+                        <option>3</option>
+                        <option>4</option>
+                    </select>
+                    <span style="padding: 0 5px;">kpl</span>
+                </div>
+            </div>
+        </div>
+
+            <div class="form-group">
+                <label for="" class="col-sm-2 control-label">Tyyppi</label>
+                <div class="col-sm-10">
+                    <select class="form-control" name="tyyppi" ng-model="tiedot.tyyppi" required>
+                      <option disabled style="display: none;"></option>
+                        <optgroup label="Kesärenkaat">
+                            <option>Kesärenkaat, irto</option>
+                            <option>Kesärenkaat, alumiinivanteilla</option>
+                            <option>Kesärenkaat, peltivanteilla</option>
+                        </optgroup>
+                        <optgroup label="Talvirenkaat">
+                            <option>Nastarenkaat, irto</option>
+                            <option>Nastarenkaat, alumiinivanteilla</option>
+                            <option>Nastarenkaat, peltivanteilla</option>
+                            <option>Kitkarenkaat, irto</option>
+                            <option>Kitkarenkaat, alumiinivanteilla</option>
+                            <option>Kitkarenkaat, peltivanteilla</option>
+                        </optgroup>
+                    </select>
+                </div>
+            </div>
+
+        <div class="form-group animateFade" ng-if="tiedot.tyyppi && tiedot.tyyppi.indexOf('vanteilla') != -1">
+            <label for="" class="col-sm-2 control-label">Pultit</label>
+            <div class="col-sm-10">
+                <select class="form-control" name="pultit" ng-model="tiedot.pultit">
+                    <option disabled style="display: none;"></option>
+                    <optgroup label="Samat pultit / mutterit">
+                        <option>Samat kesä / talvi</option>
+                    </optgroup>
+                    <optgroup label="Eri pultit / mutterit">
+                        <option>Autossa</option>
+                        <option>Renkaiden yhteydessä</option>
+                        <option>Asiakas ei toimittanut</option>
+                        <option>Ei tiedossa</option>
+                    </optgroup>
+                </select>
+            </div>
+        </div>
+
+            <div class="form-group">
+                <label for="" class="col-sm-2 control-label">Kunto</label>
+                <div class="col-sm-10">
+                    <select class="form-control" name="kunto" ng-model="tiedot.kunto" required>
+                        <option disabled style="display: none;"></option>
+                        <option>Käyttämätön</option>
+                        <option>Uudenveroinen</option>
+                        <option>Hyvä</option>
+                        <option>Tyydyttävä</option>
+                        <option>Huono</option>
+                        <option>Ajokelvoton</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="" class="col-sm-2 control-label">Sijainti</label>
+                <div class="col-sm-10">
+                    <select class="form-control" name="sijainti" ng-model="tiedot.sijainti" required>
+                        <option disabled style="display: none;"></option>
+                        <optgroup label="Varastossa">
+                            <option>Mikkeli, Hotelli</option>
+                            <option>Mikkeli, Fiksaamo</option>
+                            <option>Savonlinna, Hotelli</option>
+                            <option>Savonlinna, Fiksaamo</option>
+                        </optgroup>
+                        <optgroup label="Muualla">
+                            <option>Asiakas ei toimittanut</option>
+                            <option>Vain yhdet renkaat</option>
+                            <option>Renkaat auton kyydissä</option>
+                        </optgroup>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group animateFade" ng-if="tiedot.sijainti && (tiedot.sijainti == 'Mikkeli, Hotelli' || tiedot.sijainti == 'Savonlinna, Hotelli')">
+                <label for="" class="col-sm-2 control-label">Hylly</label>
+                <div class="col-sm-10">
+                    <select class="form-control" name="hylly" ng-model="tiedot.hylly">
+                      <option disabled style="display: none;"></option>
+                        <option>A</option>
+                        <option>B</option>
+                        <option>C</option>
+                        <option>D</option>
+                        <option>E</option>
+                        <option>F</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="" class="col-sm-2 control-label">Lisätiedot</label>
+                <div class="col-sm-10">
+                    <textarea class="form-control" name="lisatiedot" rows="2" placeholder="Lisätiedot" style="resize: none;" ng-model="tiedot.lisatiedot"></textarea>
+                </div>
+            </div>
+        </div>
+      </form>
+    </div>
+</div>
+
+<div class="modal-footer" ng-if="edit">
+    <button class="btn btn-default modalBtn mobileBtn" ng-class="{'btnSuccess':form.data.$valid}" ng-disabled="form.data.$invalid" type="button" ng-click="saveData()"><span class="glyphicon glyphicon-ok"></span> Tallenna</button>
+    <div class="modalBtns">
+        <button class="btn btn-default modalBtn btnDanger mobileBtn" type="button" ng-click="delData()"><span class="glyphicon glyphicon-trash"></span> Poista</button>
+        <button class="btn btn-default modalBtn mobileBtn" ng-class="{'btnDanger':tiedot.reknro}" ng-disabled="!tiedot.reknro" type="button" ng-click="moveData()"><span class="glyphicon glyphicon-forward"></span> Merkkaa luovutetuksi</button>
+    </div>
+</div>

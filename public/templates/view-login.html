@@ -1,0 +1,9 @@
+<form ng-submit="submitLogin()" class="loginForm">
+    <div class="form-group">
+        <label for="user">Käyttäjä</label>
+        <input type="text" ng-model="cred.user" name="user" class="form-control"/>
+        <label for="pass">Salasana</label>
+        <input type="password"  ng-model="cred.pass" name="pass" class="form-control"/>
+    </div>
+    <button type="submit" class="btn btn-success btn-block">Kirjaudu</button>
+</form>

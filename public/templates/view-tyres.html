@@ -1,0 +1,124 @@
+<div ng-show="$root.searchInput" class="searchBox animateFade" ng-class="modalOpen ? 'hidden-print':''">
+    <div class="input-group">
+        <span class="input-group-addon glyphicon glyphicon-search"></span>
+        <input type="text" class="form-control" placeholder="Hae millä tahansa hakuehdolla" ng-model="search" ng-model-options="{debounce: 1000}">
+    </div>
+</div>
+
+<uib-tabset active="active" ng-class="modalOpen ? 'hidden-print':''">
+
+    <!--FIRST TAB-->
+    <uib-tab index="0" heading="Autot" select="fetchData('autot')">
+        <table class="table table-condensed table-hover">
+            <thead>
+                <tr>
+                    <th ng-click="sortType='reknro'; sortReverse = !sortReverse">
+                      <span ng-show="sortType == 'reknro' && !sortReverse" class="glyphicon glyphicon-menu-down"></span>
+                      <span ng-show="sortType == 'reknro' && sortReverse" class="glyphicon glyphicon-menu-up"></span>
+                      Reknro
+                    </th>
+                    <th ng-click="sortType='auto'; sortReverse = !sortReverse" class="hideInMobile">
+                      <span ng-show="sortType == 'auto' && !sortReverse" class="glyphicon glyphicon-menu-down"></span>
+                      <span ng-show="sortType == 'auto' && sortReverse" class="glyphicon glyphicon-menu-up"></span>
+                      Auto
+                    </th>
+                    <th ng-click="sortType='tyyppi'; sortReverse = !sortReverse">
+                        <span ng-show="sortType == 'tyyppi' && !sortReverse" class="glyphicon glyphicon-menu-down"></span>
+                        <span ng-show="sortType == 'tyyppi' && sortReverse" class="glyphicon glyphicon-menu-up"></span>
+                        Tyyppi
+                    </th>
+                    <th ng-click="sortType='sijainti'; sortReverse = !sortReverse">
+                        <span ng-show="sortType == 'sijainti' && !sortReverse" class="glyphicon glyphicon-menu-down"></span>
+                        <span ng-show="sortType == 'sijainti' && sortReverse" class="glyphicon glyphicon-menu-up"></span>
+                        Sijainti
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="data in dataa | orderBy:sortType:sortReverse | filter:search | filter:filterBy" ng-click="openModal(data, 'autot')">
+                    <td>{{data.reknro | uppercase}}</td>
+                    <td class="hideInMobile">{{data.auto}}</td>
+                    <td>{{data.tyyppi}}</td>
+                    <td>{{data.sijainti}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </uib-tab>
+
+    <!--SECOND TAB-->
+    <uib-tab index="1" heading="Vapaat" select="fetchData('vapaat')">
+        <table class="table table-condensed table-hover">
+            <thead>
+                <tr>
+                    <th ng-click="sortType='koko'; sortReverse = !sortReverse">
+                        <span ng-show="sortType == 'koko' && !sortReverse" class="glyphicon glyphicon-menu-down"></span>
+                        <span ng-show="sortType == 'koko' && sortReverse" class="glyphicon glyphicon-menu-up"></span>
+                        Koko
+                    </th>
+                    <th ng-click="sortType='tyyppi'; sortReverse = !sortReverse">
+                        <span ng-show="sortType == 'tyyppi' && !sortReverse" class="glyphicon glyphicon-menu-down"></span>
+                        <span ng-show="sortType == 'tyyppi' && sortReverse" class="glyphicon glyphicon-menu-up"></span>
+                        Tyyppi
+                    </th>
+                    <th ng-click="sortType='auto'; sortReverse = !sortReverse" class="hideInMobile">
+                        <span ng-show="sortType == 'auto' && !sortReverse" class="glyphicon glyphicon-menu-down"></span>
+                        <span ng-show="sortType == 'auto' && sortReverse" class="glyphicon glyphicon-menu-up"></span>
+                        Auto
+                    </th>
+                    <th ng-click="sortType='sijainti'; sortReverse = !sortReverse">
+                        <span ng-show="sortType == 'sijainti' && !sortReverse" class="glyphicon glyphicon-menu-down"></span>
+                        <span ng-show="sortType == 'sijainti' && sortReverse" class="glyphicon glyphicon-menu-up"></span>
+                        Sijainti
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="data in dataa | orderBy:sortType:sortReverse | filter:search | filter:filterBy" ng-click="openModal(data, 'vapaat')">
+                    <td>{{data.koko === '-/-R-' ? '' : data.koko}} x{{data.maara}}</td>
+                    <td>{{data.tyyppi}}</td>
+                    <td class="hideInMobile">{{data.auto}}</td>
+                    <td>{{data.sijainti}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </uib-tab>
+
+    <!--THIRD TAB-->
+    <uib-tab index="2" heading="Luovutetut" select="fetchData('luovutetut')" class="floatRight">
+        <table class="table table-condensed table-hover">
+            <thead>
+                <tr>
+                    <th ng-click="sortType='reknro'; sortReverse = !sortReverse">
+                        <span ng-show="sortType == 'reknro' && !sortReverse" class="glyphicon glyphicon-menu-down"></span>
+                        <span ng-show="sortType == 'reknro' && sortReverse" class="glyphicon glyphicon-menu-up"></span>
+                        Reknro
+                    </th>
+                    <th ng-click="sortType='auto'; sortReverse = !sortReverse" class="hideInMobile">
+                        <span ng-show="sortType == 'auto' && !sortReverse" class="glyphicon glyphicon-menu-down"></span>
+                        <span ng-show="sortType == 'auto' && sortReverse" class="glyphicon glyphicon-menu-up"></span>
+                        Auto
+                    </th>
+                    <th ng-click="sortType='muokkaaja'; sortReverse = !sortReverse">
+                        <span ng-show="sortType == 'muokkaaja' && !sortReverse" class="glyphicon glyphicon-menu-down"></span>
+                        <span ng-show="sortType == 'muokkaaja' && sortReverse" class="glyphicon glyphicon-menu-up"></span>
+                        Luovuttanut
+                    </th>
+                    <th ng-click="sortType='pvm'; sortReverse = !sortReverse">
+                        <span ng-show="sortType == 'pvm' && !sortReverse" class="glyphicon glyphicon-menu-down"></span>
+                        <span ng-show="sortType == 'pvm' && sortReverse" class="glyphicon glyphicon-menu-up"></span>
+                        Pvm
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="data in dataa | orderBy:sortType:sortReverse | filter:search | filter:filterBy">
+                    <td>{{data.reknro | uppercase}}</td>
+                    <td class="hideInMobile">{{data.auto}}</td>
+                    <td>{{data.muokkaaja}}</td>
+                    <td>{{data.pvm | date:'dd.MM.yyyy HH:mm'}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </uib-tab>
+
+</uib-tabset>
