@@ -3,17 +3,27 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "bundle": "webpack"
   },
   "author": "Aku",
   "license": "MIT",
   "dependencies": {
+    "angular": "^1.5.3",
+    "angular-animate": "^1.5.3",
+    "angular-route": "^1.5.3",
+    "angular-ui-bootstrap": "^2.5.0",
     "body-parser": "^1.16.0",
+    "bootstrap": "^3.3.7",
     "cors": "^2.8.1",
+    "css-loader": "^0.26.1",
     "express": "^4.14.1",
+    "extract-text-webpack-plugin": "^2.0.0-rc.3",
     "jsonwebtoken": "^7.2.1",
     "mysql": "^2.13.0",
-    "password-hash": "^1.2.2"
+    "password-hash": "^1.2.2",
+    "url-loader": "^0.5.7",
+    "webpack": "^2.2.1"
   },
   "devDependencies": {}
 }

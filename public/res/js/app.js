@@ -1,3 +1,6 @@
+const appControllers = require("./controllers.js")
+const appServices = require("./services.js")
+
 angular.module('app', ['ngRoute','ngAnimate','ui.bootstrap','appControllers','appServices'])
 
 .config(($routeProvider, $locationProvider) => {
