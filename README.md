@@ -15,7 +15,7 @@ Running of app requires NodeJS and MySQL.
 
 Clone this repository and import `sampleDb.sql` database dumb to MySql server. Change database connection settings (host, port, user and password) in `config.js` file.
 
-Open cmd window, move to directory, install depencies with `npm install`. After that run `npm bundle` to make bundles with webpack. Then run server with command `node index.js`. App should now be running in http://localhost:3000.
+Open cmd window, move to directory, install depencies with `npm install`. After that run `webpack` to make js and css bundles with webpack. Then run server with command `node index.js`. App should now be running in http://localhost:3000.
 
 Demo database contains one user for testing purposes ( user / password ).
 
